@@ -194,15 +194,11 @@
       }
       arr = [arr];
 
-      console.log(arr);
-      
-
       var tensor = tf.tensor4d(arr);
-      // var resultado = modelo.predict(tensor).dataSync();
-      // var mayorIndice = resultado.indexOf(Math.max.apply(null, resultado));
+      //var resultado = modelo.predict(tensor).dataSync();
+      //var mayorIndice = resultado.indexOf(Math.max.apply(null, resultado));
 
       var resultado2 = modelo2.predict(tensor).dataSync();
-      print(resultado2);
       var mayorIndice2 = resultado2.indexOf(Math.max.apply(null, resultado2));
 
       var resultado3 = modelo3.predict(tensor).dataSync();
@@ -222,7 +218,7 @@
     //Cargar modelo
     (async () => {
       console.log("Cargando modelo...");
-      modelo = await tf.loadLayersModel("model4.json");
+      //modelo = await tf.loadLayersModel("model4.json");
       modelo2 = await tf.loadLayersModel("model5.json");
       modelo3 = await tf.loadLayersModel("model6.json");
       console.log("Modelo cargado...");
