@@ -1,67 +1,120 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-    <title>Números</title>
+    <link rel="shortcut icon" href="logo2.png">
+    <title>Prediccion de números</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" 
+    rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" 
+    crossorigin="anonymous">
 
     <style>
-      #resultado {
-        font-weight:  bold;
-        font-size:  6rem;
-        text-align: center;
-      }
-
       .canvas-container {
           margin: 0 auto;
-          border: 1px solid #ccc;
+          border: 1px solid rgb(0, 0, 0);
       }
     </style>
 
   </head>
+
   <body>
-    
-    <main>
-      <div class="px-4 py-2 my-2 text-center border-bottom">
-        <img class="d-block mx-auto mb-2" src="LogotipoV2-Simple.png" alt="" width="80" height="80">
-        <h1 class="display-5 fw-bold">N&uacute;meros escritos a mano</h1>
-        <div class="col-lg-6 mx-auto">
-          <p class="lead mb-0">Predicci&oacute;n de n&uacute;meros escritos a mano utilizando Tensorflow.js</p>
-          <p class="lead mb-4">El detalle puedes verlo en <a href="https://youtu.be/LRckH4U5ls8">este video</a></p>
+
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
+
+      <div class="container-fluid">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active disabled" href="./index.html">Predición de números</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="./predim.html">Prediccion de imagenes</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link " href="#">Link</a>
+          </li>
+        </ul>
+
+        <!-- <a class="navbar-brand" href="index.html">
+          <img src="\logo2.png" alt="Avatar Logo" width="10%" class="rounded-pill"> 
+        </a> -->
+      </div>
+
+    </nav>
+
+    <br><br>
+
+    <main style="background-color:#add5fa;"> 
+      <div class="px-4 py-2 my-2 text-center ">
+        <img class="d-block mx-auto mb-2" src="logo2.png" alt="" width="100" height="100">
+        <h1 class="display-5 fw-bold">Predicción de números del 0 al 9</h1><br>
+        <div class="col-lg-7 mx-auto">
+          <p class="lead mb-0">Esta predicción se hace con el uso de redes convolusionales <br><br>
+            Además, utlizamos la biblioteca de TensorFlow.js para realizar el aprendizaje en JavaScript</p><br>
         </div>
       </div>
 
       <div class="b-example-divider"></div>
 
       <div class="container mt-5">
-        <div class="row">
-          <div class="col-12 col-md-4 offset-md-4">
+
+          <div class="text-center mt-3">
             <div id="canvas-container">
-              <div><i>Dibuja el n&uacute;mero grande y centrado para tener una mejor predicci&oacute;n</i></div>
-              <canvas id="bigcanvas" width="200" height="200"></canvas>
+              <div><i>Dibuja el número dentro del recuadro</i></div><br>
+              <canvas id="bigcanvas" width="200" height="200" ></canvas>
               <canvas id="smallcanvas" width="28" height="28" style="display: none"></canvas>
             </div>
             <div class="text-center mt-3">
-              <button class="btn btn-primary" id="limpiar" onclick="limpiar()">Limpiar</button>
+              <button class="btn btn-danger" id="limpiar" onclick="limpiar()">Limpiar</button>
               <button class="btn btn-success" id="predecir" onclick="predecir()">Predecir</button>
-              <div id="resultado"></div>
             </div>
-            
+
+            <br><br>
+                        
+            <table class="table table-dark table-striped">
+              <thead>
+                <tr>
+                  <th>Modelo 1 <br>Red neuronal</th>
+                  <th>Modelo 2 <br>Red neuronal convolucional</th>
+                  <th>Modelo 3 <br>Red neuronal convolucional + Aumento de datos + Dropout</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="color:white; font-size: 5em;">
+                    <div id="resultado"></div>
+                  </td>
+                  <td style="color:white; font-size: 5em;">
+                    <div id="resultado2"></div>
+                  </td>
+                  <td style="color:white; font-size: 5em;">
+                    <div id="resultado3"></div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <!-- <div style="display: flex;">
+              <div id="resultado2"></div>
+              <div id="resultado"></div>
+              <div id="resultado3"></div>
+            </div> -->
+
           </div>
-        </div>
       </div>
 
       <div class="b-example-divider"></div>
 
       <div class="bg-dark text-secondary mt-5 px-4 py-2 text-center">
-        <div class="py-5">
-          <h1 class="display-5 fw-bold text-white">Ringa Tech</h1>
+        <div class="py-2">
+          <h1 class="display-8 fw-bold text-white">Equipo 8</h1>
+          <h6 class="fw-bold text-white">Proyecto final de Inteligencia Computacional</h6>
           <div class="col-lg-6 mx-auto">
-            <p class="fs-5 mb-4">Revisa <a href="https://youtube.com/RingaTech">mi canal</a> para videos de inteligencia artificial, programaci&oacute;n, etc.</p>
+            <p class="lead mb-2">El repositoro de git lo puedes reviar en este link: <a href="https://github.com/Miguel2900/IC">GIT</a></p>
           </div>
         </div>
       </div>
@@ -72,12 +125,16 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js"></script>
-    <script src="fabric.min.js"/></script>
+    
+    <script src="fabric.min.js"></script>
     <script src="drawing.js"></script>
 
-    <script type="text/javascript">
+    <script type="text/javascript">{
 
       var modelo = null;
+      var modelo2 = null;
+      var modelo3 = null;
+      
 
       //Tomar y configurar el canvas
       var canvas = document.getElementById("bigcanvas");
@@ -109,11 +166,24 @@
             arr = [arr]; //Meter el arreglo en otro arreglo por que si no tio tensorflow se enoja >:(
             //Nah basicamente Debe estar en un arreglo nuevo en el indice 0, por ser un tensor4d en forma 1, 28, 28, 1
             var tensor4 = tf.tensor4d(arr);
+
             var resultados = modelo.predict(tensor4).dataSync();
             var mayorIndice = resultados.indexOf(Math.max.apply(null, resultados));
+
+            var resultados2 = modelo2.predict(tensor4).dataSync();
+            var mayorIndice2 = resultados2.indexOf(Math.max.apply(null, resultados2));
+
+            var resultados3 = modelo3.predict(tensor4).dataSync();
+            var mayorIndice3 = resultados3.indexOf(Math.max.apply(null, resultados3));
             
             console.log("Prediccion", mayorIndice);
             document.getElementById("resultado").innerHTML = mayorIndice;
+
+            console.log("Prediccion", mayorIndice2);
+            document.getElementById("resultado2").innerHTML = mayorIndice2;
+
+            console.log("Prediccion", mayorIndice3);
+            document.getElementById("resultado3").innerHTML = mayorIndice3;
         }
 
         /**
@@ -215,8 +285,11 @@
       (async () => {
           console.log("Cargando modelo...");
           modelo = await tf.loadLayersModel("model.json");
+          modelo2 = await tf.loadLayersModel("model2.json");
+          modelo3 = await tf.loadLayersModel("model3.json");
           console.log("Modelo cargado...");
       })();
+    }
     </script>
   </body>
 </html>
