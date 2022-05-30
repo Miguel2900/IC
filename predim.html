@@ -12,12 +12,6 @@
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
   <style>
-    #resultado {
-      font-weight: bold;
-      font-size: 6rem;
-      text-align: center;
-    }
-
     .canvas-container {
       margin: 0 auto;
       border: 1px solid #ccc;
@@ -64,6 +58,17 @@
       <div class="col-lg-7 mx-auto">
         <p class="lead mb-0">Esta predicción se hace con el uso de redes convolusionales <br><br>
           Además, utlizamos la biblioteca de TensorFlow.js para realizar el aprendizaje en JavaScript</p><br>
+          <p class="lead mb-0">Categorías que reconoce
+          </p><br>
+          <li>Avión</li>
+          <li>Automóvil</li>
+          <li>Gato</li>
+          <li>Venado</li>
+          <li>Perro</li>
+          <li>Rana</li>
+          <li>Caballo</li>
+          <li>Barco</li>
+          <li>Camión</li>
       </div>
     </div>
 
@@ -76,12 +81,11 @@
         <input type="file" id="img" name="img" accept="image/*">
         <div id="canvas-container" style="display: none"> 
           <canvas id="bigcanvas"></canvas>
-          <canvas id="smallcanvas" width="32" height="32" ></canvas>
+          <canvas id="smallcanvas" width="32" height="32" style="display: none"></canvas>
         </div>
         <div class="text-center mt-3">
           <button class="btn btn-danger" id="limpiar" onclick="limpiar()">Limpiar</button>
           <button class="btn btn-success" id="predecir" onclick="predecir()">Predecir</button>
-          <div id="resultado"></div>
         </div>
 
         <br><br>
@@ -155,9 +159,9 @@
 
     function draw() {
     canvasContainer.style.display = 'block';
-    canvas.width = this.width;
-    canvas.height = this.height;
-    ctx1.drawImage(this, 0,0);
+    canvas.width = 500;
+    canvas.height = 500*this.height/this.width;
+    ctx1.drawImage(this, 0,0, canvas.width, canvas.height);
     }
 
     function failed() {
@@ -194,9 +198,10 @@
       }
       arr = [arr];
 
+      var diccionario=['Avión','Automóvil','Pájaro','Gato','Venado','Perro','Rana','Caballo','Bote','Camión']
       var tensor = tf.tensor4d(arr);
-      //var resultado = modelo.predict(tensor).dataSync();
-      //var mayorIndice = resultado.indexOf(Math.max.apply(null, resultado));
+      var resultado = modelo.predict(tensor).dataSync();
+      var mayorIndice = resultado.indexOf(Math.max.apply(null, resultado));
 
       var resultado2 = modelo2.predict(tensor).dataSync();
       var mayorIndice2 = resultado2.indexOf(Math.max.apply(null, resultado2));
@@ -206,19 +211,19 @@
       
       
       console.log("Prediccion", mayorIndice);
-      document.getElementById("resultado").innerHTML = mayorIndice;
+      document.getElementById("resultado").innerHTML = diccionario[mayorIndice];
 
       console.log("Prediccion", mayorIndice2);
-      document.getElementById("resultado2").innerHTML = mayorIndice2;
+      document.getElementById("resultado2").innerHTML = diccionario[mayorIndice2];
 
       console.log("Prediccion", mayorIndice3);
-      document.getElementById("resultado3").innerHTML = mayorIndice3;
+      document.getElementById("resultado3").innerHTML = diccionario[mayorIndice3];
     }
 
     //Cargar modelo
     (async () => {
       console.log("Cargando modelo...");
-      //modelo = await tf.loadLayersModel("model4.json");
+      modelo = await tf.loadLayersModel("model4.json");
       modelo2 = await tf.loadLayersModel("model5.json");
       modelo3 = await tf.loadLayersModel("model6.json");
       console.log("Modelo cargado...");
