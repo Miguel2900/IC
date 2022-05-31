@@ -10,6 +10,8 @@ Las otras tres redes son ocupadas en la segunda página web, la cual consiste en
 
 Puede descargarse los contenidos del repositorio para hacer uso del proyecto, ya viene incluido con los modelos entrenados necesarios, y con todo para que se pueda correr.
 
+En caso de querer cambiar alguna parte de la red, se podrá entrar al [notebook](docs/Proyecto_Final_IC.ipynb) y hacer los cambios que se deseen, solo será necesario volver a generar los .json y .bin, además dentro del .json, será necesario cambiar la referencia al .bin conforme a los nombres correctos.
+
 Lo único necesario será tener instalado [Python](https://www.python.org/downloads/) para poder correrlo dentro de un servidor HTTP. Al tenerlo instalado, deberá abrir una consola dentro de la carpeta donde se encuentra el proyecto, y escribir el siguiente comando.
 ```
 python -m http.server 8000
